@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 
 class AssetCategory(models.Model):
-    __tablename__ = 'asset_category'
     asset_category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, blank=True, null=True)
