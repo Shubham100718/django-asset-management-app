@@ -83,16 +83,20 @@ WSGI_APPLICATION = 'DjangoApi.wsgi.application'
 
 
 import pymysql
+import os
+from dotenv import load_dotenv
 pymysql.install_as_MySQLdb()
+load_dotenv()
+
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'asset_management_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': os.getenv('MYSQL_DATABASE_NAME'),
+        'USER': os.getenv('MYSQL_DATABASE_USER'),
+        'PASSWORD': os.getenv('MYSQL_DATABASE_PASSWORD'),
+        'HOST': os.getenv('MYSQL_DATABASE_HOST'),
+        'PORT': os.getenv('MYSQL_DATABASE_PORT'),
     }
 }
 
@@ -136,3 +140,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
