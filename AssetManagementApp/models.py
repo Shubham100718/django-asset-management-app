@@ -5,19 +5,19 @@ from django.db import models
 class AssetCategory(models.Model):
     asset_category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500, blank=True, null=True)
-    is_laptop = models.BooleanField(blank=False)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    is_laptop = models.BooleanField(default=False)
 
 class Location(models.Model):
     location_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
 class Room(models.Model):
     room_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     location_id = models.ForeignKey("Location", on_delete=models.CASCADE)
-    description = models.CharField(max_length=500, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
 class User(models.Model):
     employee_id = models.AutoField(primary_key=True)
@@ -28,17 +28,17 @@ class User(models.Model):
 
 class Status(models.Model):
     status_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
     color_code = models.CharField(max_length=50)
     type = models.CharField(max_length=50, blank=True, null=True)
-    show_on_dashboard_code = models.BooleanField(blank=False)
-    is_default_for_status = models.BooleanField(blank=False)
-    description = models.CharField(max_length=500)
+    show_on_dashboard_code = models.BooleanField(default=False)
+    is_default_for_status = models.BooleanField(default=False)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
 class Supplier(models.Model):
     supplier_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
     email = models.CharField(max_length=50)
     mobile_no = models.IntegerField()
 
@@ -52,17 +52,17 @@ class Asset(models.Model):
     model = models.CharField(max_length=50)
     company_name = models.CharField(max_length=100)
     serial_number = models.IntegerField()
-    purchase_date = models.DateField(blank=True, null=True)
+    purchase_date = models.DateField(auto_now_add=True, blank=True, null=True)
     purchase_cost = models.IntegerField(blank=True, null=True)
     supplier_id = models.ForeignKey("Supplier", blank=True, null=True, on_delete=models.CASCADE)
     warranty = models.IntegerField(blank=True, null=True)
-    description = models.CharField(max_length=500, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
 class Permission(models.Model):
     permission_id = models.AutoField(primary_key=True)
     module = models.CharField(max_length=100)
     user_id = models.ForeignKey("User", blank=True, null=True, on_delete=models.CASCADE)
-    value = models.BooleanField(blank=False)
+    value = models.BooleanField(default=False)
 
 class Laptop(models.Model):
     laptop_id = models.AutoField(primary_key=True)
@@ -74,9 +74,9 @@ class Laptop(models.Model):
     ram = models.CharField(max_length=50)
     disk_type = models.CharField(max_length=50)
     disk_capacity = models.CharField(max_length=50)
-    is_cisco_product = models.BooleanField(blank=False)
-    is_cloudops_product = models.BooleanField(blank=False)
-    is_splunk_product = models.BooleanField(blank=False)
+    is_cisco_product = models.BooleanField(default=False)
+    is_cloudops_product = models.BooleanField(default=False)
+    is_splunk_product = models.BooleanField(default=False)
     splunk_id = models.CharField(max_length=50)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
