@@ -2,37 +2,37 @@ version: '3'
 
 services:
 
-  # mysql:
-  #   container_name: mysql
-  #   image: mysql:latest
-  #   ports:
-  #     - "3306:3306"
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE: my_db
-  #     MYSQL_USER: admin
-  #     MYSQL_PASSWORD: admin
-  #   volumes:
-  #     - ./my_db.sql:/docker-entrypoint-initdb.d/my_db.sql     # Mount sql script into container's /docker-entrypoint-initdb.d directory to get table automatically created
-  #     - mysql-data:/var/lib/mysql    # Mount the volume for MySQL data storage
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    volumes:
+      # - ./my_db.sql:/docker-entrypoint-initdb.d/my_db.sql     # Mount sql script into container's /docker-entrypoint-initdb.d directory to get table automatically created
+      - mysql-data:/var/lib/mysql    # Mount the volume for MySQL data storage
 
-  # phpmyadmin:
-  #   container_name: phpmyadmin
-  #   image: phpmyadmin:latest
-  #   ports:
-  #     - 8081:80
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     PMA_HOST: mysql
-  #     PMA_USER: admin
-  #     PMA_PASSWORD: admin
-  #   depends_on:
-  #     - mysql
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    ports:
+      - 8081:80
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: mysql
+      PMA_USER: admin
+      PMA_PASSWORD: admin
+    depends_on:
+      - mysql
 
   app:
     container_name: app
-    build: ./
-    # image: shubhamsaxena2207/flask-app:latest
+    # build: ./
+    image: shubhamsaxena2207/django-app:latest
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver"
     ports:
       - 5000:5000
