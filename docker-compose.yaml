@@ -33,7 +33,7 @@ services:
     container_name: app
     # build: ./
     image: shubhamsaxena2207/django-app:latest
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver"
+    command: python manage.py runserver
     ports:
       - 5000:5000
     environment:
